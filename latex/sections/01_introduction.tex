@@ -9,7 +9,30 @@ Computational acceleration introduces direct legal and technical friction. Digit
 
 Beyond reliability, LLM integration expands the adversarial attack surface of forensic laboratories. Suspect files, event logs, and command-line records ingested by automated triage pipelines can embed indirect prompt injection payloads. An adversary anticipating post-incident examination can plant natural language directives inside passive system artifacts, attempting to steer the generative triage engine into suppressing malicious process identifiers or reclassifying hostile commands as benign administration~\cite{chernyshev2026_large, kim2026_evidenceborne}. Forensic engineering must reconcile semantic automation with deterministic verification and strict defensive isolation.
 
-Despite rapid academic output, the literature remains scattered across digital forensics journals, software security venues, and legal jurisprudence periodicals. Prior surveys often conflate classical machine learning classifiers with generative transformers or omit transparent, reproducible literature selection protocols.
+Despite rapid academic output, the literature remains scattered across digital forensics journals, software security venues, and legal jurisprudence periodicals. Existing secondary studies offer valuable early perspectives~\cite{scanlon2023_chatgpt, wickramasekara2025_exploring, chernyshev2026_large, jelodar2026_large, scanlon2026_investigation}, yet none simultaneously combine a reproducible PRISMA 2020 protocol, Crossref--OpenAlex bibliometric triangulation, decoupled orthogonal taxonomy across both forensic directions, hardware determinism modeling, European high-risk AI / LED statutory analysis, and a public replication package. Table~\ref{tab:survey_comparison} positions this systematic review against existing secondary surveys in the domain.
+
+\begin{table*}[!t]
+\caption{Positioning of This Systematic Review Against Prior Secondary Surveys and Roadmaps in LLM Digital Forensics}
+\label{tab:survey_comparison}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{p{3.4cm}cccccccc}
+\toprule
+\textbf{Secondary Study (Year)} & \textbf{PRISMA} & \textbf{Biblio. +} & \textbf{Dual Axis} & \textbf{QA1--QA4} & \textbf{Determinism} & \textbf{EU AI Act /} & \textbf{Anti-} & \textbf{Public} \\
+ & \textbf{2020} & \textbf{OpenAlex} & \textbf{(For/Of)} & \textbf{Audit} & \textbf{Manifest} & \textbf{LED / CPP} & \textbf{Forensics} & \textbf{Repo} \\
+\midrule
+Scanlon et al.~\cite{scanlon2023_chatgpt} (2023) & -- & -- & -- & -- & -- & -- & Part. & -- \\
+Wickramasekara et al.~\cite{wickramasekara2025_exploring} (2025) & -- & -- & -- & -- & -- & Part. & Part. & -- \\
+Chernyshev et al.~\cite{chernyshev2026_large} (2026) & -- & -- & Part. & -- & -- & Part. & \checkmark & -- \\
+Jelodar et al.~\cite{jelodar2026_large} (2026) & -- & -- & -- & -- & -- & -- & Part. & -- \\
+Scanlon~\cite{scanlon2026_investigation} (2026) & -- & -- & \checkmark & -- & -- & Part. & -- & -- \\
+\midrule
+\textbf{This Review (2026)} & \textbf{\checkmark} & \textbf{\checkmark} & \textbf{\checkmark} & \textbf{\checkmark} & \textbf{\checkmark} & \textbf{\checkmark} & \textbf{\checkmark} & \textbf{\checkmark} \\
+\bottomrule
+\multicolumn{9}{p{16.5cm}}{\tiny Legend: \checkmark\ = full systematic/formal treatment; Part. = partial or high-level discussion; -- = not addressed. Dual Axis separates LLMs applied \textit{for} DFIR from forensics \textit{of} LLM/agentic systems.}
+\end{tabular}
+\end{table*}
 
 To close this gap, this study conducts a systematic review and bibliometric analysis adhering to the PRISMA 2020 protocol~\cite{page2021prisma}. We retrieve, screen, and synthesize peer-reviewed publications indexed via the Crossref REST API from January 2021 through November 10, 2026 ($N=44$), explicitly distinguishing LLMs applied \textit{to} forensic pipelines from the forensic investigation \textit{of} LLM systems. Four research questions guide this investigation:
 \begin{itemize}

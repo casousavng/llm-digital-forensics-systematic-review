@@ -1,0 +1,63 @@
+\appendix
+\section*{Appendix: Complete Orthogonal Coding Matrix ($N=44$)}
+\label{app:corpus_matrix}
+Table~\ref{tab:master_corpus} catalogs all $N=44$ validated core studies ordered chronologically, reporting publication year, venue type (J: journal; P: proceedings), forensic direction (A: LLMs for DFIR; B: Forensics of LLMs), study type (Emp.: empirical/system/benchmark; Surv.: survey/roadmap), thematic subdomain, deployment locality, agentic scope, and Crossref/OpenAlex citation counts.
+
+\begin{table*}[!t]
+\caption{Complete Orthogonal Classification of the Validated Core Corpus ($N=44$, Ordered Chronologically)}
+\label{tab:master_corpus}
+\centering
+\fontsize{6.3pt}{7.2pt}\selectfont
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{rlcccccccr}
+\toprule
+\textbf{\#} & \textbf{Study Citation (Short Label)} & \textbf{Yr} & \textbf{Pub} & \textbf{Axis} & \textbf{Type} & \textbf{Subdomain} & \textbf{Deployment} & \textbf{Agentic} & \textbf{CR/OA} \\
+\midrule
+1 & Chernyshev et al. (LLM Log Forensics)~\cite{chernyshev2023_towards} & 2023 & P & B & Emp. & Forensics of LLM & N/A (Surv./Subj.) & -- & 14/29 \\
+2 & Scanlon et al. (ChatGPT DFIR)~\cite{scanlon2023_chatgpt} & 2023 & J & A & Surv. & Triage/Report & N/A (Surv./Subj.) & -- & 74/190 \\
+3 & Scanlon et al. (Age of ChatGPT)~\cite{scanlon2023_digital} & 2023 & J & A & Surv. & Triage/Report & N/A (Surv./Subj.) & -- & 15/34 \\
+4 & Michelet \& Breitinger (Report Writing)~\cite{michelet2024_chatgpt} & 2024 & J & A & Emp. & Triage/Report & Local/Offline & -- & 41/92 \\
+5 & Oh et al. (volGPT Ransomware RAM)~\cite{oh2024_volgpt} & 2024 & J & A & Emp. & Memory (RAM) & Cloud/Unspec. & -- & 21/51 \\
+6 & Walker et al. (AutoGen Artifacts)~\cite{walker2024_forensic} & 2024 & P & B & Emp. & Forensics of LLM & N/A (Surv./Subj.) & Target & 6/14 \\
+7 & Xu et al. (Transforming DF)~\cite{xu2024_transforming} & 2024 & P & A & Emp. & Triage/Report & Cloud/Unspec. & -- & 15/22 \\
+8 & Alharthi \& Yasaei (Cloud Forensics)~\cite{alharthi2025_llmpowered} & 2025 & P & A & Emp. & IR/Logs/SOC & Cloud/Unspec. & -- & 2/8 \\
+9 & Chakir \& Lahsen-Cherif (ForensicsData)~\cite{chakir2025_forensicsdata} & 2025 & P & A & Emp. & Triage/Report & Cross (incl. Open) & -- & 3/4 \\
+10 & Clark \& Chen (RoBERTa Windows API)~\cite{clark2025_large} & 2025 & J & A & Emp. & Malware/RE & Local/Offline & -- & 0/0 \\
+11 & Farber (Crime Scene Image Triage)$^\dagger$~\cite{farber2025_scpaiscp} & 2025 & J & A & Emp. & Triage/Report & Cloud/Unspec. & -- & 36/53 \\
+12 & George et al. (CTI Knowledge Graphs)~\cite{george2025_llm} & 2025 & P & A & Emp. & IR/Logs/SOC & Cloud/Unspec. & -- & 0/0 \\
+13 & Khatiwala et al. (DFKG Reliability)~\cite{khatiwala2025_evaluating} & 2025 & P & A & Emp. & Triage/Report & Cloud/Unspec. & -- & 4/16 \\
+14 & Kim et al. (Law Enforcement Mobile)~\cite{kim2025_digital} & 2025 & J & A & Emp. & Triage/Report & Cloud/Unspec. & -- & 14/32 \\
+15 & Liu (AutoBnB Multi-Agent IR)~\cite{liu2025_autobnb} & 2025 & P & A & Emp. & IR/Logs/SOC & Cloud/Unspec. & Tool & 13/23 \\
+16 & Matsuda et al. (Sigma MCP IR)~\cite{matsuda2025_enhancing} & 2025 & P & A & Emp. & IR/Logs/SOC & Cloud/Unspec. & -- & 1/1 \\
+17 & Michelet et al. (Fine-Tuning DF)~\cite{michelet2025_finetuning} & 2025 & J & A & Emp. & Triage/Report & Local/Offline & -- & 8/11 \\
+18 & Sharma et al. (ForensicLLM 8B)~\cite{sharma2025_forensicllm} & 2025 & J & A & Emp. & Triage/Report & Local/Offline & -- & 26/59 \\
+19 & Studiawan et al. (Timeline Benchmark)~\cite{studiawan2025_towards} & 2025 & J & A & Emp. & IR/Logs/SOC & Cross (incl. Open) & -- & 6/19 \\
+20 & Wickramasekara et al. (DF Survey)~\cite{wickramasekara2025_exploring} & 2025 & J & A & Surv. & Triage/Report & N/A (Surv./Subj.) & -- & 28/88 \\
+21 & Xu \& Deng (DF Evidence Analysis)$^*$~\cite{xu2025_enhancing} & 2025 & P & A & Emp. & Triage/Report & Cloud/Unspec. & -- & 2/4 \\
+22 & Zheng et al. (AV-Agent Malware)~\cite{zheng2025_avagent} & 2025 & J & A & Emp. & Malware/RE & Cloud/Unspec. & Tool & 3/7 \\
+23 & Zhou et al. (Forensic Intel. Graphs)~\cite{zhou2025_forensic} & 2025 & P & A & Emp. & Triage/Report & Cloud/Unspec. & -- & 2/3 \\
+24 & Chernyshev et al. (DF Capabilities)~\cite{chernyshev2026_large} & 2026 & J & A & Surv. & Triage/Report & N/A (Surv./Subj.) & -- & 4/28 \\
+25 & Gharaibeh \& Baggili (Rusting Vol3)~\cite{gharaibeh2026_rusting} & 2026 & J & A & Emp. & Memory (RAM) & Cloud/Unspec. & -- & 0/0 \\
+26 & Hammar et al. (IR DSS Companion)$^*$~\cite{hammar2026_a} & 2026 & P & A & Emp. & IR/Logs/SOC & Local/Offline & -- & 0/0 \\
+27 & Hammar et al. (Lightweight IR NDSS)~\cite{hammar2026_incident} & 2026 & P & A & Emp. & IR/Logs/SOC & Local/Offline & -- & 14/23 \\
+28 & Jelodar et al. (Software/Malware Rev.)~\cite{jelodar2026_large} & 2026 & J & A & Surv. & Malware/RE & N/A (Surv./Subj.) & -- & 31/81 \\
+29 & Johnson et al. (Gaming Chat Triage)~\cite{johnson2026_aiassisted} & 2026 & P & A & Emp. & Triage/Report & Cloud/Unspec. & -- & 0/0 \\
+30 & Kao et al. (Local Wallet RAM 8B)~\cite{kao2026_a} & 2026 & J & A & Emp. & Memory (RAM) & Local/Offline & -- & 0/0 \\
+31 & Kim et al. (Evidence Prompt Injection)~\cite{kim2026_evidenceborne} & 2026 & J & A & Emp. & Triage/Report & Cloud/Unspec. & -- & 0/0 \\
+32 & Ko et al. (Pig Butchering Triage)~\cite{ko2026_humansupervised} & 2026 & J & A & Emp. & Triage/Report & Cloud/Unspec. & -- & 0/0 \\
+33 & Meskova et al. (Transformer Malware)~\cite{meskova2026_aidriven} & 2026 & P & A & Emp. & Malware/RE & Cloud/Unspec. & -- & 1/1 \\
+34 & Ozyurt et al. (Android APK Agents)~\cite{ozyurt2026_llmorchestrated} & 2026 & P & A & Emp. & Malware/RE & Cloud/Unspec. & Tool & 0/0 \\
+35 & Satter et al. (MCP Memory Forensics)~\cite{satter2026_with} & 2026 & J & B & Emp. & Forensics of LLM & N/A (Surv./Subj.) & Target & 0/1 \\
+36 & Sava et al. (TRIAGE-CPG PE Binaries)~\cite{sava2026_triagecpg} & 2026 & P & A & Emp. & Malware/RE & Cross (incl. Open) & -- & 0/0 \\
+37 & Scanlon (AI Evidence \& Readiness)~\cite{scanlon2026_investigation} & 2026 & J & B & Surv. & Forensics of LLM & N/A (Surv./Subj.) & -- & 0/1 \\
+38 & Sudheer et al. (LSB Steganography)$^*$~\cite{sudheer2026_least} & 2026 & P & A & Emp. & Legal/XAI/Stego & Cloud/Unspec. & -- & 0/0 \\
+39 & Tian et al. (GALA Microservices)$^\dagger$~\cite{tian2026_gala} & 2026 & P & A & Emp. & IR/Logs/SOC & Cloud/Unspec. & Tool & 0/4 \\
+40 & Tiwari \& Nene (X-ForensicNet)~\cite{tiwari2026_xforensicnet} & 2026 & P & A & Emp. & Legal/XAI/Stego & Local/Offline & Tool & 0/0 \\
+41 & Trivedi (Premise Bias \& FRE 702)~\cite{trivedi2026_when} & 2026 & J & A & Emp. & Legal/XAI/Stego & Cloud/Unspec. & -- & 0/0 \\
+42 & Xu et al. (Mobile Local LLM RAM)~\cite{xu2026_recovering} & 2026 & P & B & Emp. & Forensics of LLM & N/A (Surv./Subj.) & -- & 0/1 \\
+43 & Yoo \& Jeong (Keyword Augmentation)~\cite{yoo2026_scpllmscp} & 2026 & J & A & Emp. & Triage/Report & Cloud/Unspec. & -- & 0/0 \\
+44 & {\"O}zg{\"o}zler et al. (ED-ASOC)~\cite{zgzler2026_eventdriven} & 2026 & P & A & Emp. & IR/Logs/SOC & Cloud/Unspec. & Tool & 1/3 \\
+\bottomrule
+\multicolumn{10}{p{17.0cm}}{\tiny Note: CR/OA denotes Crossref vs.\ OpenAlex citation counts (Nov 2026). $^*$Archival short/companion paper ($<4$ pp., $n=3$). $^\dagger$Domain-adjacent empirical boundary study ($n=2$). Sensitivity exclusion of all five marked entries ($N_{\text{sens}}=39$) alters key corpus proportions by $<2.1$ percentage points.}
+\end{tabular}
+\end{table*}
