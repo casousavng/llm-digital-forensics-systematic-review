@@ -1,0 +1,65 @@
+\documentclass[journal]{IEEEtran}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, arrows.meta, positioning}
+
+\lstset{
+  basicstyle=\ttfamily\scriptsize,
+  breaklines=true,
+  frame=single,
+  backgroundcolor=\color{gray!5},
+  numbers=none,
+  keywordstyle=\bfseries\color{blue!70!black},
+  showstringspaces=false
+}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Generative Artificial Intelligence and Large Language Models in Digital Forensics: A Systematic Review and Bibliometric Analysis}
+
+\author{Carlos~Andr\'e~Sousa%
+\thanks{Carlos Andr\'e Sousa (Student No. 2022105675) is with the Master of Science in Cybersecurity and Computer Systems Auditing, Polytechnic Institute of Gaya (ISPGAYA), Vila Nova de Gaia, Portugal (e-mail: casousa@ispgaya.pt). This systematic review was developed for the course \textit{Digital Forensics Analysis}, Academic Year 2026/2027.}}
+
+\markboth{M.Sc. in Cybersecurity and Computer Systems Auditing, ISPGAYA, 2026/2027}%
+{Sousa: Generative AI and Large Language Models in Digital Forensics}
+
+\maketitle
+
+\begin{abstract}
+Digital forensics and incident response (DFIR) teams increasingly deploy Generative Artificial Intelligence (GenAI) and Large Language Models (LLMs) to accelerate evidence triage, log summarization, and malware analysis. Probabilistic text generation clashes directly with evidentiary rules: non-deterministic inference, fragile chain-of-custody boundaries, uncritical premise acceptance, indirect prompt injection, and courtroom admissibility under Daubert, Federal Rule of Evidence 702(d), and European high-risk AI mandates remain unresolved barriers. Following PRISMA 2020, this paper systematically reviews and bibliometrically maps peer-reviewed literature retrieved via 28 Crossref REST API queries from 2021 through November 10, 2026 and cross-validated via OpenAlex (44/44 DOI match; 97.7\% affiliation and 90.9\% abstract/full-text coverage; $N=44$ core studies: 22 journal articles and 22 archival proceedings). Publication volume surged sharply, with 84.1\% ($n=37$) appearing in 2025--2026 year-to-date. Orthogonal taxonomic auditing disentangles two distinct research axes: 88.6\% ($n=39$) apply LLMs as forensic or incident-response tools, whereas 11.4\% ($n=5$) investigate digital artifacts left by LLM and agentic platforms. Across the 34 empirical LLM-for-DFIR tool studies (excluding six surveys and LLM-as-subject works), only 23.5\% ($n=8$) design or deploy dedicated local, offline, or lightweight open-weights models and 8.8\% ($n=3$) include open-weights in cross-model benchmarks; the remaining 67.6\% ($n=23$) depend on commercial cloud APIs or omit local execution guarantees, conflicting with the EU Law Enforcement Directive (2016/680), GDPR, judicial secrecy, and the EU AI Act (Regulation 2024/1689). Full-text quality auditing on an open-access empirical subset ($n=6$) further exposes zero complete reproducibility manifests and zero empirical stress-tests of evidence-borne prompt injection, while floating-point non-associativity on parallel GPUs precludes exact bitwise replay. Generative models cannot act as autonomous forensic evaluators; courtroom admissibility requires air-gapped cognitive coprocessors governed by ISO/IEC 27037/27042, cryptographic manifests, and non-delegable human examiner accountability.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Digital Forensics, Incident Response, Large Language Models, Generative AI, Bibliometric Analysis, PRISMA 2020, Chain of Custody, EU AI Act.
+\end{IEEEkeywords}
+
+\input{sections/01_introduction}
+\input{sections/02_methodology}
+\input{sections/03_bibliometrics}
+\input{sections/04_operational_use_cases}
+\input{sections/05_custody_crypto}
+\input{sections/06_anti_forensics}
+\input{sections/07_discussion}
+\input{sections/08_conclusion}
+
+\section*{Data Availability Statement}
+All 28 Crossref bibliographic query strings are disclosed verbatim in Table~\ref{tab:query_strings}. The complete open replication package, comprising Crossref and OpenAlex harvesting/enrichment scripts, the OpenAlex JSON enrichment dataset ($N=44$), PRISMA screening counts, the orthogonal coding matrix (\texttt{orthogonal\_coding\_matrix\_44.csv}), QA1--QA4 empirical audit records, and full LaTeX source files, is publicly archived at \url{https://github.com/casousavng/llm-digital-forensics-systematic-review}. Copyrighted publisher PDFs are excluded from the repository in compliance with publisher licensing terms.
+
+\section*{Conflict of Interest Statement}
+The author declares that there are no financial, personal, or professional conflicts of interest that could have inappropriately influenced or biased the design, execution, or presentation of this research.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

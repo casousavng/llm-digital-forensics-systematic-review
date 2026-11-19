@@ -1,0 +1,26 @@
+\begin{table*}[!t]
+\caption{Taxonomic Synthesis of Core Literature Across All Six Mutually Exclusive Subdomains ($N=44$)}
+\label{tab:taxonomy_summary}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{2.2cm}cp{3.7cm}p{2.1cm}cp{3.9cm}}
+\toprule
+\textbf{Subdomain} & \textbf{Corpus} & \textbf{Verified Exemplar Studies} & \textbf{Dominant Paradigm} & \textbf{RQs} & \textbf{Forensic Relevance \& Safeguards} \\
+\midrule
+Evidence Triage, Reporting \& Datasets & 18 (40.9\%) & ForensicLLM~\cite{sharma2025_forensicllm}, Reporting~\cite{michelet2024_chatgpt}, DFKG~\cite{khatiwala2025_evaluating}, ForensicsData~\cite{chakir2025_forensicsdata} & Cloud APIs / Local Fine-Tuned & RQ2, RQ3, RQ4 & Case-note synthesis, graph grounding, and benchmark corpora; requires air-gapped local weights and prompt-injection defense. \\
+\addlinespace
+Incident Response, Logs \& Agentic SOC & 9 (20.5\%) & AutoBnB~\cite{liu2025_autobnb}, Lightweight IR~\cite{hammar2026_incident}, Cloud Logs~\cite{alharthi2025_llmpowered}, Timelines~\cite{studiawan2025_towards} & Multi-Agent / Lightweight LLMs & RQ2, RQ4 & Distributed telemetry correlation and response planning; requires immutable \texttt{plaso} timelines to block narrative smoothing. \\
+\addlinespace
+Malware Analysis \& Reverse Eng. & 6 (13.6\%) & RoBERTa API Calls~\cite{clark2025_large}, TRIAGE-CPG~\cite{sava2026_triagecpg}, AV-Agent~\cite{zheng2025_avagent}, APK Agents~\cite{ozyurt2026_llmorchestrated} & Fine-Tuned / Graph + Agentic & RQ2, RQ4 & System-call classification and CPG triage; vulnerable to adversarial call/code perturbation and obfuscation. \\
+\addlinespace
+Forensics of LLM \& Agentic Systems & 5 (11.4\%) & AutoGen~\cite{walker2024_forensic}, Mobile RAM~\cite{xu2026_recovering}, MCP Memory~\cite{satter2026_with}, AI Readiness~\cite{scanlon2026_investigation} & Target Subject (Disk / RAM / Logs) & RQ1, RQ2, RQ3 & Recovers prompts, tool invocations, and KV/context buffers from suspect LLM runtimes under ISO/IEC 27037/27042. \\
+\addlinespace
+Volatile Memory Forensics (Assisted) & 3 (6.8\%) & volGPT~\cite{oh2024_volgpt}, Rusting Volatility~\cite{gharaibeh2026_rusting}, Wallet RAM~\cite{kao2026_a} & Local / Cloud + Volatility & RQ2, RQ3 & Ransomware triage, Rust plugin migration, and privacy-preserving wallet memory analysis; mandates isolated RAM scratch. \\
+\addlinespace
+Admissibility, XAI \& Covert Artifacts & 3 (6.8\%) & Premise Bias~\cite{trivedi2026_when}, X-ForensicNet~\cite{tiwari2026_xforensicnet}, LSB Stego~\cite{sudheer2026_least} & Offline Neuro-Symbolic / Audit & RQ3, RQ4 & FRE 702(d) premise auditing, deterministic neuro-symbolic grounding, and covert payload triage. \\
+\midrule
+\textbf{Total Corpus} & \textbf{44 (100.0\%)} & \multicolumn{4}{p{10.8cm}}{\textit{Mutually exclusive partition across Axis A ($n=39$, LLMs for DFIR) and Axis B ($n=5$, Forensics of LLM Systems).}} \\
+\bottomrule
+\end{tabular}
+\end{table*}

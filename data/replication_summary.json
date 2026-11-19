@@ -1,0 +1,30 @@
+{
+  "N": 44,
+  "openalex_doi_coverage": "44/44",
+  "openalex_broad_search_count_2021_2026": 2457,
+  "deployment_counts": {
+    "Dedicated_Local_Offline_Lightweight": 8,
+    "Cloud_API_Or_Unspecified": 23,
+    "N/A_Survey_Or_Subject": 10,
+    "Cross_Model_Incl_OpenWeights": 3
+  },
+  "agentic_counts": {
+    "Non_Agentic": 36,
+    "Multi_Agent_DFIR_Tool": 6,
+    "Agentic_Forensic_Target": 2
+  },
+  "dual_pass_agreement": {
+    "direction": {
+      "po": 1.0,
+      "kappa": 1.0
+    },
+    "agentic": {
+      "po": 1.0,
+      "kappa": 1.0
+    },
+    "dedicated_local_on_34_empirical": {
+      "po": 0.941,
+      "kappa": 0.821
+    }
+  }
+}

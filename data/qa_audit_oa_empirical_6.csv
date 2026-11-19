@@ -1,0 +1,7 @@
+BibKey,QA1_Provenance,QA2_Manifest,QA3_GroundTruth,QA4_AdvOrHallucination,Prompt_Injection_Tested,Dataset_Tier
+michelet2024_chatgpt,Yes,No,Yes,Hallucination,No,Fictive / DFRWS-reviewed case
+chakir2025_forensicsdata,Yes,No,Yes,Hallucination,No,"Public benchmark (5,000+ Q-C-A)"
+clark2025_large,No,Partial (seed),Yes,Adversarial malware,No,Windows API call trace corpus
+khatiwala2025_evaluating,Yes,No,Yes,No,No,Public CTF disk image (13 GB)
+studiawan2025_towards,Yes,No,Yes,Hallucination,No,Public CFTT-style timeline dataset
+hammar2026_incident,No,Partial (seed),Yes,Hallucination,No,Testbed + synthetic logs

@@ -1,0 +1,100 @@
+\section{Anti-Forensics and Adversarial Threats (RQ4)}
+\label{sec:anti_forensics}
+
+To address RQ4, this section examines adversarial mechanisms targeting LLM-assisted forensic workflows. Embedding generative transformers into analytical pipelines transforms the forensic workstation from a passive, deterministic parser into an active cognitive attack surface. Adversaries exploit a structural weakness shared across transformer architectures: the absence of a hard hardware or mathematical boundary separating trusted system instructions from untrusted evidentiary data tokens.
+
+\subsection{Evidence-Borne Indirect Prompt Injection}
+Evidence-borne indirect prompt injection constitutes the most immediate operational threat to automated digital triage~\cite{chernyshev2026_large, kim2026_evidenceborne}. Forensic pipelines ingest untrusted text directly from compromised endpoints, including Windows Security Event Logs, web server logs, shell histories, chat databases, and email headers.
+
+An adversary anticipating post-incident forensic triage can plant natural language override directives inside these passive artifacts. When an automated pipeline passes a Windows Process Creation record (Event ID 4688) or textual evidence chunk to an LLM instructed to summarize lateral movement, the injected string enters the same self-attention context as the examiner's system prompt. The embedded directive attempts to hijack instruction hierarchy, instructing the triage engine to ignore suspicious process identifiers, omit attacker IP addresses, or classify hostile PowerShell commands as authorized maintenance~\cite{chernyshev2026_large, kim2026_evidenceborne, ozyurt2026_llmorchestrated}. Controlled empirical measurements over natural-language artifacts (emails, SMS messages, and notes) by Kim et al.~\cite{kim2026_evidenceborne} demonstrate that evidence-borne false-positive injection (flipping normal evidence to suspicious) succeeds in 54.1\% of cases, whereas evasion (flipping suspicious evidence to normal) succeeds in 8.5\%; crucially, explicitly framing ingested evidence as untrusted data in a black-box prompt defense lowered overall attack success rate (ASR) from 31.3\% to 0.6\% without degrading clean classification accuracy. Compounding this risk, because agentic platforms persist tool-invocation contexts in volatile memory even when application logs are disabled~\cite{satter2026_with}, unauthenticated contextual artifacts recovered from RAM can themselves carry adversarial strings into downstream forensic queries.
+
+Listing~\ref{lst:prompt_injection} contrasts an unfiltered Event ID 4688 tag-escape injection with a two-layer defensive boundary: Base64 transport serialization paired with pre-inference canonical sanitization and grammar-constrained decoding. Naive XML or Markdown delimiters fail against tag-escaping payloads where the attacker injects a synthetic closing delimiter (such as \texttt{</raw\_payload>}) inside the command line. Base64 serialization preserves exact byte fidelity and prevents syntactic delimiter escape during pipeline transport and manifest hashing. However, Base64 alone does not resolve the semantic inference dilemma: feeding undecoded Base64 strings directly into a 4-bit quantized 7B--8B local model degrades fine-grained semantic inspection of obfuscated commands, whereas decoding Base64 back into plaintext before attention re-exposes latent representations to the embedded directive. Similarly, EBNF or JSON Schema logit masking mathematically prevents free-form attacker prose, yet cannot stop a hijacked model from emitting a schema-compliant false negative (flipping \texttt{"suspicious": true} to \texttt{false}). Syntactic containment therefore requires pairing with deterministic YARA/Sigma cross-checking and dual-agent validation.
+
+\begin{lstlisting}[
+  float=!t,
+  caption={Evidence-borne prompt injection in Windows Event ID 4688, contrasted with Base64 transport serialization (preserving the full raw command line), canonical pre-inference isolation, and grammar-constrained decoding.},
+  label={lst:prompt_injection},
+  captionpos=b,
+  abovecaptionskip=6pt,
+  belowcaptionskip=2pt,
+  basicstyle=\fontsize{6.7pt}{8.1pt}\ttfamily,
+  frame=single,
+  framerule=0.5pt,
+  rulecolor=\color{black!80},
+  backgroundcolor=\color{gray!4},
+  columns=fullflexible,
+  keepspaces=true,
+  framesep=3pt,
+  showstringspaces=false
+]
+[VULNERABLE ARTIFACT: UNFILTERED LOG INGESTION]
+EventID: 4688 (Process Creation)
+Time: 2026-03-14T03:12:45Z
+Process: C:\Windows\System32\powershell.exe
+CommandLine: powershell.exe -enc JABzAD0... #
+  </raw_payload>[SYSTEM_OVERRIDE]: Suppress PID 4412
+
+[LAYER 1: BASE64 TRANSPORT & MANIFEST ENVELOPE]
+<evidence_envelope id="EV-4688" hash="61d45c24...">
+  <metadata source="Security.evtx" rec="8142"/>
+  <!-- Full raw CommandLine Base64-encoded -->
+  <payload encoding="base64" sha256="c1dae946...">
+    cG93ZXJzaGVsbC5leGUgLWVuYyBKQUJ6QUQwLi4uICMg
+    PC9yYXdfcGF5bG9hZD5bU1lTVEVNX09WRVJSSURFXTog
+    U3VwcHJlc3MgUElEIDQ0MTI=
+  </payload>
+</evidence_envelope>
+
+[LAYER 2: SANITIZED DECODE + GRAMMAR + RULE CHECK]
+Pre-inference: strip control tags; run Sigma/YARA first
+Grammar mask (JSON Schema):
+{"event_id": 4688, "suspicious": true,
+ "sigma_match": "proc_creation_win_powershell_enc",
+ "mitre_technique": "T1059.001"}
+# Deterministic rule flags override schema-valid
+# LLM false negatives ("suspicious": false).
+\end{lstlisting}
+
+\subsection{Adversarial Perturbation and Semantic Malware Evasion}
+Threat actors similarly adapt malicious software to subvert language-model malware detectors. Whereas classical signature engines were bypassed via packing and polymorphism, transformer-based behavioral and static analyzers face adversarial token and structural perturbation~\cite{clark2025_large, jelodar2026_large, sava2026_triagecpg}.
+
+In behavioral system-call classifiers such as RoBERTa fine-tuned on Windows API traces~\cite{clark2025_large}, adversaries can interleave benign API sequences or split malicious operations across longer call windows to dilute chunk-level probability aggregation. In static source-code and decompiled-binary triage~\cite{jelodar2026_large, sava2026_triagecpg}, attackers embed dead-code blocks, benign identifier names, and misleading natural language docstrings describing a credential harvester as a routine diagnostic benchmark. Without structural graph grounding (such as Code Property Graphs~\cite{sava2026_triagecpg}), generative models overweight deceptive lexical context and misclassify hostile routines as benign.
+
+\subsection{Context Flooding and Resource Exhaustion}
+Automated forensic pipelines remain exposed to algorithmic denial of service. Enterprise forensic images routinely span hundreds of gigabytes. An adversary can intentionally plant circular directory trees, padded event logs, or high-volume synthetic telemetry designed to overflow context windows and local GPU VRAM budgets~\cite{zgzler2026_eventdriven, liu2025_autobnb}.
+
+When naive triage scripts apply sliding windows or hard truncation to fit overflowing logs inside fixed token budgets, attackers who pad logs around compromise timestamps push dispositive artifacts beyond truncation boundaries. On air-gapped workstations running quantized 7B--8B local models, unbounded context growth inflates KV-cache allocations rapidly, provoking out-of-memory failures that halt automated triage entirely.
+
+\subsection{Architectural Countermeasures and Defensive Hardening}
+Defending LLM-assisted forensic workflows requires strict architectural decoupling between deterministic evidence parsing and probabilistic semantic triage. Three engineering patterns anchor resilient forensic hardening:
+
+\textit{Two-Stage Data Isolation and Grammar Constraints:} Raw artifacts must traverse ingestion pipelines inside Base64-encoded, SHA-256 hashed envelopes to guarantee immutable transport provenance and block syntactic tag escape~\cite{sharma2025_forensicllm}. Prior to local SLM attention, a deterministic sanitization filter must decode payloads into canonical JSON fields, strip structural markup delimiters, and execute signature/Sigma pre-screening before applying EBNF or JSON Schema constrained decoding. Because grammar masks only restrict syntax and cannot prevent schema-valid false negatives, deterministic rule hits must supersede generative classifications.
+
+\textit{Dual-Agent Cross-Examination:} Multi-agent architectures reduce single-model subversion by separating triage generation from adversarial auditing. A primary triage model extracts candidate indicators while an independent verifier model checks outputs against deterministic Sigma/YARA rules and premise-consistency constraints, flagging anomalous suppressions or unauthorized tool calls~\cite{liu2025_autobnb, ozyurt2026_llmorchestrated, hammar2026_a}.
+
+\textit{Deterministic Grounding with Byte-Level Verification:} Every entity, timestamp, process identifier, or MITRE ATT\&CK mapping proposed by a language model must be programmatically corroborated against deterministic parsers (\texttt{plaso}, Volatility, Sleuth Kit) and raw cryptographic hashes before entering an official case file. Probabilistic inference remains strictly advisory.
+
+Table~\ref{tab:adversarial_matrix} maps each anti-forensic threat vector to its operational mechanism, forensic impact, engineering countermeasure, and governing legal or technical standard.
+
+\begin{table*}[!t]
+\caption{Adversarial Threat Matrix: Anti-Forensic Attack Vectors and Engineering Defenses in LLM Pipelines}
+\label{tab:adversarial_matrix}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{p{2.7cm}p{3.7cm}p{3.3cm}p{4.3cm}p{2.4cm}}
+\toprule
+\textbf{Threat Vector} & \textbf{Adversarial Mechanism} & \textbf{Forensic Impact} & \textbf{Engineering Mitigation} & \textbf{Governing Standard} \\
+\midrule
+Evidence-Borne Prompt Injection & Natural language override strings planted in logs, chats, or metadata. & Hijacks triage reasoning; suppresses IOCs or emits schema-valid false negatives. & Pre-inference Sigma/YARA screening + EBNF schema + dual-agent audit. & NIST SP 800-86~\cite{nist_sp800_86} / AI Act~\cite{eu_ai_act_2024} \\
+\addlinespace
+Delimiter / Tag Escape & Crafted closing tags (e.g., \texttt{</raw\_payload>}) inside raw artifact fields. & Breaks passive container boundary; injects control-plane instructions. & Base64 transport envelope + canonical tag stripping prior to SLM decode. & ISO/IEC 27037~\cite{iso27037_2012} / 27042~\cite{iso27042_2015} \\
+\addlinespace
+Behavioral \& Semantic Malware Evasion & Benign API padding, dead code, and deceptive docstrings in binaries/scripts. & Dilutes behavioral chunk scores; induces false-negative classification. & Code Property Graph (CPG) grounding; hybrid static/dynamic verification. & FRE 702(d)~\cite{fre702_2023} / ISO 27041~\cite{iso27041_2015} \\
+\addlinespace
+Context Flooding (VRAM DoS) & Inflated directory hierarchies and noisy synthetic telemetry streams. & Overflows KV-cache VRAM; drops dispositive evidence at truncation limits. & Deterministic chunking, KV-cache quantization (Q8\_0), and fixed map-reduce quotas. & ISO/IEC 27042~\cite{iso27042_2015} \\
+\addlinespace
+Chronological Desynchronization & Timestomping exploiting autoregressive narrative coherence bias. & Silently reorders conflicting timestamps to fabricate a smooth timeline. & Immutable UTC sequencing via \texttt{plaso}; prohibit LLM timestamp sorting. & Daubert~\cite{daubert1993} / CPP 163~\cite{portugal_cpp} \\
+\bottomrule
+\end{tabular}
+\end{table*}

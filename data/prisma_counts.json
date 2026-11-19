@@ -1,0 +1,15 @@
+{
+  "identificacao_total": 691,
+  "duplicados_removidos": 6,
+  "triagem_registos": 685,
+  "triagem_excluidos": 568,
+  "elegibilidade_avaliados": 117,
+  "elegibilidade_excluidos": 73,
+  "elegibilidade_motivos": {
+    "EC1_nao_digital": 0,
+    "EC2_sem_genai": 0,
+    "EC3_mencao_periferica": 57,
+    "EC4_capitulo_livro_serie": 16
+  },
+  "incluidos_total": 44
+}

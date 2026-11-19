@@ -1,0 +1,35 @@
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}[
+    node distance=1.0cm and 0.5cm,
+    box/.style={draw, rectangle, rounded corners=2pt, text width=6.9cm, align=left, font=\scriptsize, inner sep=5pt, fill=gray!5},
+    arr/.style={-latex', thick}
+]
+
+\node[box] (id) {\textbf{Identification (Cutoff: November 10, 2026):}\\
+Records identified via 28 Crossref REST API queries ($n = 691$)\\
+Duplicate DOI/title records removed prior to screening ($n = 6$)};
+
+\node[box, below=0.65cm of id] (screen) {\textbf{Screening Phase (Single-Reviewer Title/Abstract):}\\
+Unique records screened ($n = 685$); Records excluded ($n = 568$):\\
+\quad $\bullet$ EC1 (Non-digital forensic disciplines): $n = 192$\\
+\quad $\bullet$ EC2 (Classical ML/DL without LLM/GenAI): $n = 284$\\
+\quad $\bullet$ EC4 (Out of window, grey literature, non-archival): $n = 92$};
+
+\node[box, below=0.65cm of screen] (elig) {\textbf{Eligibility Assessment (Full-Record Appraisal):}\\
+Candidate records assessed for eligibility ($n = 117$); Excluded ($n = 73$):\\
+\quad $\bullet$ EC3 (Peripheral/passing mention without integration): $n = 57$\\
+\quad $\bullet$ EC4 (Unrefereed book chapters / non-archival series): $n = 16$};
+
+\node[box, below=0.65cm of elig, fill=blue!5] (incl) {\textbf{Included Core Corpus ($N = 44$ Peer-Reviewed Studies):}\\
+Axis A: LLMs for DFIR ($n=39$, 88.6\%) $\mid$ Axis B: Forensics of LLMs ($n=5$, 11.4\%)\\
+Open-access full-text empirical QA audit subset: $n_{\text{OA-Emp}} = 6$ (of 8 OA PDFs)};
+
+\draw[arr] (id) -- (screen);
+\draw[arr] (screen) -- (elig);
+\draw[arr] (elig) -- (incl);
+
+\end{tikzpicture}
+\caption{PRISMA 2020 flow diagram detailing Crossref identification (cutoff November 10, 2026), screening, eligibility, and dual-axis inclusion ($N=44$).}
+\label{fig:prisma_flowchart}
+\end{figure}

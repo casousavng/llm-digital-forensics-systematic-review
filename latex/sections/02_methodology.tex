@@ -1,0 +1,99 @@
+\section{Review Methodology}
+\label{sec:methodology}
+
+This review adheres to the Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA 2020) reporting guidelines~\cite{page2021prisma}. Transparent protocol specification is necessary in digital forensics research, where methodological traceability mirrors the evidentiary rigor demanded by judicial scrutiny.
+
+\subsection{Information Sources, Cutoff Date, and Query Suite}
+Programmatic literature identification was executed on \textbf{November 10, 2026} directly against the Crossref REST API (\texttt{/works?query.bibliographic=...}), which aggregates DOI-registered bibliographic metadata across major scholarly publishers including Elsevier, IEEE, ACM, Springer, Wiley, and the Internet Society. To overcome Crossref's sparse abstract and affiliation coverage without relying on paywalled proprietary databases, all validated DOIs were subsequently cross-validated and enriched against the open scholarly index \textbf{OpenAlex} (\texttt{api.openalex.org/works}), achieving a 44/44 (100\%) DOI match and elevating structured abstract/full-text coverage from 13.6\% ($n=6$) to 90.9\% ($n=40$: 39 OpenAlex reconstructed abstracts plus one local open-access PDF) and institutional affiliation coverage from 61.4\% ($n=27$) to 97.7\% ($n=43$). Automated Crossref retrieval dispatched exactly 28 targeted bibliographic query strings, each parameterized with temporal bounds \texttt{from-pub-date:2021-01-01} through \texttt{until-pub-date:2026-12-31} and capped at \texttt{rows=35} top-ranked records per query. Consequently, 2026 publication counts represent year-to-date indexing through November 10, 2026 rather than a closed calendar year.
+
+To guarantee exact protocol reproducibility, Table~\ref{tab:query_strings} discloses all 28 bibliographic query strings executed verbatim during retrieval, grouped by forensic scope. Unlike a full Cartesian expansion across all domain and AI terms, these 28 targeted intersections prioritize precision across core DFIR subdomains, adversarial risks, and custody requirements while limiting Crossref relevance-ranking noise.
+
+\begin{table*}[!t]
+\caption{Complete Disclosure of the 28 Crossref REST API Bibliographic Query Strings Executed on November 10, 2026 (\texttt{rows=35}, 2021--2026)}
+\label{tab:query_strings}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{clp{6.3cm}clp{6.3cm}}
+\toprule
+\textbf{\#} & \textbf{Axis} & \textbf{Exact Crossref \texttt{query.bibliographic} String} & \textbf{\#} & \textbf{Axis} & \textbf{Exact Crossref \texttt{query.bibliographic} String} \\
+\midrule
+Q01 & Core DF & \texttt{"digital forensics" "large language model"} & Q15 & Invest. & \texttt{"forensic investigation" "large language model"} \\
+Q02 & Core DF & \texttt{"digital forensics" "LLM"} & Q16 & Invest. & \texttt{"forensic investigation" "ChatGPT"} \\
+Q03 & Core DF & \texttt{"digital forensics" "ChatGPT"} & Q17 & Analysis & \texttt{"forensic analysis" "large language model"} \\
+Q04 & Core DF & \texttt{"digital forensics" "generative AI"} & Q18 & Analysis & \texttt{"forensic analysis" "LLM"} \\
+Q05 & Comp. DF & \texttt{"computer forensics" "large language model"} & Q19 & Evidence & \texttt{"digital evidence" "large language model"} \\
+Q06 & Comp. DF & \texttt{"computer forensics" "LLM"} & Q20 & Evidence & \texttt{"digital evidence" "ChatGPT"} \\
+Q07 & Comp. DF & \texttt{"computer forensics" "ChatGPT"} & Q21 & Custody & \texttt{"chain of custody" "large language model"} \\
+Q08 & Cyber DF & \texttt{"cyber forensics" "large language model"} & Q22 & Adv. & \texttt{"digital forensics" "prompt injection"} \\
+Q09 & Cyber DF & \texttt{"cyber forensics" "ChatGPT"} & Q23 & Adv. & \texttt{"digital forensics" "anti-forensics"} \\
+Q10 & IR & \texttt{"incident response" "large language model"} & Q24 & Found. & \texttt{"digital forensics" "foundation model"} \\
+Q11 & IR & \texttt{"incident response" "LLM"} & Q25 & Email & \texttt{"email forensics" "large language model"} \\
+Q12 & IR & \texttt{"incident response" "generative AI"} & Q26 & Malware & \texttt{"malware analysis" "large language model" forensics} \\
+Q13 & Memory & \texttt{"memory forensics" "large language model"} & Q27 & Logs & \texttt{"log analysis" "large language model" forensics} \\
+Q14 & Memory & \texttt{"memory forensics" "LLM"} & Q28 & Triage & \texttt{"forensic triage" "large language model"} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Eligibility Criteria and Scope Boundaries}
+Unambiguous inclusion (IC) and exclusion (EC) rules were defined to isolate peer-reviewed scholarly contributions while accurately reflecting the dual direction of contemporary forensic AI research:
+
+\textbf{Inclusion Criteria:}
+\begin{enumerate}
+    \item[\textbf{IC1:}] Studies addressing the intersection of generative AI or LLMs with digital forensics and incident response along either of two explicit axes: \textit{Axis A (LLMs for DFIR)}, applying LLMs or transformer language models to investigative triage, malware, memory, log, or incident-response workflows; or \textit{Axis B (Forensics of LLM Systems)}, investigating digital evidence acquisition, memory reconstruction, or forensic readiness for LLM and agentic software platforms.
+    \item[\textbf{IC2:}] Works contributing an empirical system, benchmark, dataset, artifact acquisition study, or foundational domain survey and legal-admissibility analysis directly advancing forensic practice.
+    \item[\textbf{IC3:}] Peer-reviewed archival journal articles or peer-reviewed conference and workshop proceedings bearing registered DOIs.
+    \item[\textbf{IC4:}] Publication date within the 2021 to November 10, 2026 retrieval window.
+    \item[\textbf{IC5:}] Published in English.
+\end{enumerate}
+
+\textbf{Exclusion Criteria:}
+\begin{enumerate}
+    \item[\textbf{EC1:}] Purely physical or biomedical forensic disciplines, including pathology, toxicology, ballistics, physical odontology, and human DNA profiling.
+    \item[\textbf{EC2:}] Investigations restricted exclusively to classical machine learning or non-language deep learning classifiers (such as support vector machines, random forests, or convolutional image networks) lacking any LLM or transformer language-model component.
+    \item[\textbf{EC3:}] Peripheral or passing mentions of ChatGPT or generative AI without substantive forensic methodology, empirical evaluation, or structured domain synthesis.
+    \item[\textbf{EC4:}] Non-peer-reviewed grey literature, unrefereed book chapters and book series, editorial prefaces, keynote abstracts without technical proceedings, and records outside temporal or language bounds. Peer-reviewed archival short technical papers (2--3 pages in flagship IEEE/ACM conferences, $n=3$~\cite{xu2025_enhancing, sudheer2026_least, hammar2026_a}) and peer-reviewed ACM security workshops ($n=2$~\cite{chernyshev2023_towards, sava2026_triagecpg}) presenting concrete implementations were retained rather than mechanically discarded by page count.
+    \item[\textbf{EC5:}] Duplicate bibliographic records matched by normalized DOI or sanitized title.
+\end{enumerate}
+
+\subsection{Screening, Selection, and Reviewer Protocol}
+Screening followed a four-phase PRISMA 2020 workflow summarized in Fig.~\ref{fig:prisma_flowchart}. Execution of the 28 queries yielded 691 raw bibliographic records. Automated DOI and normalized-title deduplication removed 6 duplicate entries (EC5), retaining 685 unique records for primary screening.
+
+\input{figures/prisma_flowchart.tex}
+
+During title and metadata screening of all 685 unique records, 568 entries were excluded: 192 addressed physical or medical forensics (EC1), 284 employed conventional non-LLM classifiers (EC2), and 92 fell outside archival peer-reviewed or temporal criteria (EC4). The remaining 117 candidate records underwent detailed eligibility appraisal, during which 73 publications were excluded: 57 failed EC3 due to incidental mentions without operational forensic integration, and 16 failed EC4 because they originated from unrefereed book chapters or non-archival book series.
+
+Filtering produced a final validated core corpus of $N=44$ peer-reviewed studies (22 journal articles and 22 conference/workshop proceedings). Within this set, two domain-adjacent empirical studies retrieved by the forensic and incident-response queries were deliberately retained and flagged as boundary cases: Farber~\cite{farber2025_scpaiscp}, which evaluates multimodal LLMs on crime-scene photographic triage with ten forensic examiners, and Tian et al.~\cite{tian2026_gala}, which applies graph-augmented LLM agents to microservice incident response. Because this review was conducted by a single human author without a second independent human screener, coding reliability was audited through a deterministic dual-pass verification protocol comparing automated lexical rule classification (executed over titles and the 40 reconstructed abstracts/full texts) against curated manual coding across $N=44$. Observed agreement reached 94.1\% (Cohen's $\kappa=0.821$) on dedicated local-model classification across the 34 empirical DFIR tools (the two rule divergences stemmed from full-text-only model details in~\cite{clark2025_large} and parenthetical wording in~\cite{michelet2024_chatgpt}). All scripts, JSON snapshots, and coding matrices are publicly archived for independent audit (\url{https://github.com/casousavng/llm-digital-forensics-systematic-review}).
+
+\subsection{Quality Appraisal and Open-Access Full-Text Audit}
+In accordance with PRISMA 2020 risk-of-bias reporting standards, methodological quality was evaluated against four forensic engineering criteria: \textbf{QA1 (Artifact Provenance)}, specifying evidence source formats, disk/memory structures, or cryptographic baselines; \textbf{QA2 (Reproducibility Manifest)}, disclosing complete inference parameters (system prompt, temperature $T$, top-$p$, random seed, and model/tokenizer versions); \textbf{QA3 (Ground-Truth Objectivity)}, evaluating accuracy against deterministic or labeled ground-truth baselines; and \textbf{QA4 (Robustness and Adversarial Testing)}, quantitatively measuring hallucination rates, context degradation, or evidence-borne prompt injection.
+
+Although OpenAlex enrichment expanded abstract visibility to 90.9\% ($n=40$) of the corpus, publisher paywalls restrict programmatic full-text access for closed-access papers; claiming complete QA1--QA4 scores from abstracts alone would overstate verifiable evidence. Instead, we executed a rigorous, auditable full-text QA1--QA4 inspection across the \textbf{open-access archival full-text subset} available on disk ($n=8$ PDFs, comprising $n_{\text{OA-Emp}}=6$ empirical implementations/datasets and 2 comprehensive surveys~\cite{jelodar2026_large, wickramasekara2025_exploring}), complemented by OpenAlex abstract verification across the remaining 36 studies. Table~\ref{tab:qa_audit} summarizes the exact empirical audit results.
+
+\begin{table}[!t]
+\caption{Quantitative Forensic Quality Appraisal (QA1--QA4) Across the Open-Access Empirical Full-Text Audit Subset ($n_{\text{OA-Emp}}=6$)}
+\label{tab:qa_audit}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{lccccp{1.75cm}}
+\toprule
+\textbf{Study} & \textbf{QA1} & \textbf{QA2} & \textbf{QA3} & \textbf{QA4} & \textbf{Primary} \\
+ & \textbf{Prov.} & \textbf{Manif.} & \textbf{GT} & \textbf{Adv/Hal} & \textbf{Dataset Tier} \\
+\midrule
+Michelet et al.~\cite{michelet2024_chatgpt} & Yes & No & Yes & Hal. & Fictive Case \\
+Chakir et al.~\cite{chakir2025_forensicsdata} & Yes & No & Yes & Hal. & Public (5k QCA) \\
+Clark \& Chen~\cite{clark2025_large} & No & Part.* & Yes & Adv. & API Traces \\
+Khatiwala et al.~\cite{khatiwala2025_evaluating} & Yes & No & Yes & No & CTF (13~GB) \\
+Studiawan et al.~\cite{studiawan2025_towards} & Yes & No & Yes & Hal. & Public Bench. \\
+Hammar et al.~\cite{hammar2026_incident} & No & Part.* & Yes & Hal. & Testbed / Synth. \\
+\midrule
+\textbf{Pass Rate ($n=6$)} & \textbf{4/6} & \textbf{0/6} & \textbf{6/6} & \textbf{5/6} & \textbf{0/6 Prompt Inj.} \\
+ & \textbf{(66.7\%)} & \textbf{(0.0\%)} & \textbf{(100\%)} & \textbf{(83.3\%)} & \textbf{Stress-Tested} \\
+\bottomrule
+\multicolumn{6}{p{7.8cm}}{\tiny *Partial QA2: fixed random seeds disclosed, but complete forensic manifest (weights hash, $T$/top-$p$, runtime flags) omitted.}
+\end{tabular}
+\end{table}
+
+The quantitative audit exposes an unmistakable structural deficit. While all six audited empirical studies measure performance against labeled ground-truth baselines (QA3: 6/6) and five evaluate or analyze hallucination or adversarial malware behavior (QA4: 5/6), \textbf{none (0/6)} publish a complete forensic reproducibility manifest (QA2), and \textbf{none (0/6)} stress-test evidence-borne indirect prompt injection. Even across the entire $N=44$ corpus, only one dedicated study~\cite{kim2026_evidenceborne} empirically targets evidence-borne prompt injection in forensic triage. Operational prototypes advance rapidly; forensic reproducibility standards lag behind.

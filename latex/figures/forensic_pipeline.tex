@@ -1,0 +1,43 @@
+\begin{figure*}[!t]
+\centering
+\begin{tikzpicture}[
+    node distance=0.6cm and 0.32cm,
+    stage/.style={draw=blue!60!black, fill=blue!5, rounded corners=2pt, font=\scriptsize\bfseries, align=center, inner sep=3pt, text width=2.45cm, minimum height=1.15cm},
+    control/.style={draw=red!60!black, fill=red!5, dashed, rounded corners=2pt, font=\tiny, align=center, inner sep=2pt, text width=2.45cm},
+    arr/.style={-{Latex[length=2.2mm]}, thick, draw=blue!60!black}
+]
+
+% Nodes
+\node[stage] (evid) {1. Evidence Image\\(E01, RAW, AFF4)\\Bitstream Capture};
+\node[stage, right=0.32cm of evid] (block) {2. Ingestion Isolation\\Hardware Write-Block\\Read-Only (\texttt{noatime})};
+\node[stage, right=0.32cm of block] (parse) {3. Deterministic Parse\\Plaso / Volatility\\Immutable Timeline};
+\node[stage, right=0.32cm of parse] (envel) {4. Envelope \& Manifest\\Canonical Sanitization\\Manifest $\mathcal{M}$ (SHA-256)};
+\node[stage, right=0.32cm of envel] (slm) {5. Air-Gapped SLM\\Quantized + KV Budget\\EBNF + Rule Check};
+\node[stage, right=0.32cm of slm, fill=green!10, draw=green!60!black] (human) {6. Verified Report\\Examiner Audit\\CPP 163 / FRE 702(d)};
+
+% Controls underneath
+\node[control, below=0.25cm of evid] (c1) {ISO/IEC 27037 Custody\\SHA-256 / BLAKE3};
+\node[control, below=0.25cm of block] (c2) {LED / Lei 59/2019\\Physical Air-Gap};
+\node[control, below=0.25cm of parse] (c3) {ISO/IEC 27042 Analysis\\Anti-Timestomping UTC};
+\node[control, below=0.25cm of envel] (c4) {Base64 Transport Layer\\Pre-Inference Strip};
+\node[control, below=0.25cm of slm] (c5) {Offline \texttt{llama.cpp} / vLLM\\Dual-Agent + YARA/Sigma};
+\node[control, below=0.25cm of human] (c6) {EU AI Act Annex III\\Sworn \textit{In Personam} Oath};
+
+% Arrows
+\draw[arr] (evid) -- (block);
+\draw[arr] (block) -- (parse);
+\draw[arr] (parse) -- (envel);
+\draw[arr] (envel) -- (slm);
+\draw[arr] (slm) -- (human);
+
+\draw[dotted, thick, gray] (evid) -- (c1);
+\draw[dotted, thick, gray] (block) -- (c2);
+\draw[dotted, thick, gray] (parse) -- (c3);
+\draw[dotted, thick, gray] (envel) -- (c4);
+\draw[dotted, thick, gray] (slm) -- (c5);
+\draw[dotted, thick, gray] (human) -- (c6);
+
+\end{tikzpicture}
+\caption{End-to-end air-gapped forensic ingestion pipeline reconciling local generative inference with ISO/IEC 27037/27042 custody and analysis standards, EU LED/AI Act mandates, adversarial sanitization, and courtroom verifiability.}
+\label{fig:forensic_pipeline}
+\end{figure*}
